@@ -20,4 +20,16 @@ public class ClientController {
     public ResponseEntity<?> getAccounts(@RequestParam("clientId") int clientId){
         return ResponseEntity.ok(clientService.getAccounts(clientId));
     }
+
+    @GetMapping("/accountsxml")
+    public ResponseEntity<?> getAccountsXML(@RequestParam("clientId") int clientId){
+        return ResponseEntity.ok(clientService.getAccountsXML(clientId));
+    }
+
+
+    @GetMapping("/one")
+    public ResponseEntity<?> getAccount(@RequestParam("clientId") int clientId){
+        return ResponseEntity.ok(clientService.getOne(clientId));
+    }
 }
+

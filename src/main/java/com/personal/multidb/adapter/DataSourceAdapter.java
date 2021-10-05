@@ -31,7 +31,7 @@ public class DataSourceAdapter {
 
     private final ClientDBConnectionDetailRepo clientDBConnectionDetailRepo;
 
-    public DataSource getDataSourceOfClient(int clientId) {
+    private DataSource getDataSourceOfClient(int clientId) {
         if (dataSourceMap.containsKey(clientId)) {
             return dataSourceMap.get(clientId);
         }
@@ -50,7 +50,7 @@ public class DataSourceAdapter {
         return dataSource;
     }
 
-    public EntityManagerFactory getEntityManager(int clientId) {
+    private EntityManagerFactory getEntityManager(int clientId) {
 
         if(entityManagerFactoryMap.containsKey(clientId)){
             return entityManagerFactoryMap.get(clientId);

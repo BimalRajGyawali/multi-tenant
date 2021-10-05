@@ -19,30 +19,30 @@ public class MultiDbApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String dbUrl = "jdbc:postgresql://localhost:5432/";
-        ClientDBConnectionDetail connectionDetail =
-                ClientDBConnectionDetail.builder()
-                        .clientId(1)
-                        .dbUsername("postgres")
-                        .dbPassword("postgres")
-                        .dbDriver("POSTGRES")
-                        .dbUrl(dbUrl+"client1")
-                        .dbName("client1")
-                        .build();
-
-        ClientDBConnectionDetail connectionDetail2 =
-                ClientDBConnectionDetail.builder()
-                        .clientId(2)
-                        .dbUsername("postgres")
-                        .dbPassword("postgres")
-                        .dbDriver("POSTGRES")
-                        .dbUrl(dbUrl+"client2")
-                        .dbName("client2")
-                        .build();
-
-
-        clientDBConnectionDetailRepo.save(connectionDetail);
-        clientDBConnectionDetailRepo.save(connectionDetail2);
+//        String dbUrl = "jdbc:postgresql://localhost:5432/";
+//        ClientDBConnectionDetail connectionDetail =
+//                ClientDBConnectionDetail.builder()
+//                        .clientId(1)
+//                        .dbUsername("postgres")
+//                        .dbPassword("postgres")
+//                        .dbDriver("org.postgresql.Driver")
+//                        .dbUrl(dbUrl+"client1")
+//                        .dbName("client1")
+//                        .build();
+//
+//        ClientDBConnectionDetail connectionDetail2 =
+//                ClientDBConnectionDetail.builder()
+//                        .clientId(2)
+//                        .dbUsername("postgres")
+//                        .dbPassword("postgres")
+//                        .dbDriver("org.postgresql.Driver")
+//                        .dbUrl(dbUrl+"client2")
+//                        .dbName("client2")
+//                        .build();
+//
+//
+//        clientDBConnectionDetailRepo.save(connectionDetail);
+//        clientDBConnectionDetailRepo.save(connectionDetail2);
 
     }
 }

@@ -17,11 +17,8 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
+@ToString
 public class Account {
-    @Id
     private int id;
-
-    @Column(name = "accnumber")
     private String accountNumber;
 }
