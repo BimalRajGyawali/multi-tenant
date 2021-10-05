@@ -1,6 +1,6 @@
 package com.personal.multidb.service;
 
-import com.personal.multidb.dto.Account;
+import com.personal.multidb.dto.AccountMapper;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  * @project multi-db
  */
 public interface ClientService {
-    List<Account> getAccounts(int clientId);
+    List<AccountMapper> getAccounts(int clientId);
 }

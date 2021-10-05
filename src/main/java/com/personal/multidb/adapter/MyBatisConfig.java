@@ -1,5 +1,6 @@
 package com.personal.multidb.adapter;
 
+import com.personal.multidb.dto.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -34,8 +35,7 @@ public class MyBatisConfig {
         Environment devEnv = new Environment("dev", transactionFactory, dataSource);
 
         Configuration configuration = new Configuration(devEnv);
-
-
+        configuration.addMapper(AccountMapper.class);
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         SqlSessionFactory sqlSessionFactory = builder.build(configuration);
