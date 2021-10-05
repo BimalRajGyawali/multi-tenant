@@ -35,6 +35,8 @@ public class MyBatisConfig {
         Environment devEnv = new Environment("dev", transactionFactory, dataSource);
 
         Configuration configuration = new Configuration(devEnv);
+
+        //Add MyBatis Mapper Classes here
         configuration.addMapper(AccountMapper.class);
 
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
