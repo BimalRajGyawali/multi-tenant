@@ -3,7 +3,6 @@ package com.personal.multidb.dto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import javax.persistence.Column;
 import java.util.List;
 
 /**
@@ -15,5 +14,10 @@ public interface AccountMapper {
 
     @Select("select id, accnumber as accountNumber from account")
     List<Account> getAccounts();
+
+    List<Account> getAccountsXML();
+
+    @Select("select id, accnumber as accountNumber from account where id=1")
+    Account getOne();
 
 }

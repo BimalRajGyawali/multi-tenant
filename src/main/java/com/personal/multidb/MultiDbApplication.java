@@ -25,7 +25,7 @@ public class MultiDbApplication implements CommandLineRunner {
 //                        .clientId(1)
 //                        .dbUsername("postgres")
 //                        .dbPassword("postgres")
-//                        .dbDriver("POSTGRES")
+//                        .dbDriver("org.postgresql.Driver")
 //                        .dbUrl(dbUrl+"client1")
 //                        .dbName("client1")
 //                        .build();
@@ -35,7 +35,7 @@ public class MultiDbApplication implements CommandLineRunner {
 //                        .clientId(2)
 //                        .dbUsername("postgres")
 //                        .dbPassword("postgres")
-//                        .dbDriver("POSTGRES")
+//                        .dbDriver("org.postgresql.Driver")
 //                        .dbUrl(dbUrl+"client2")
 //                        .dbName("client2")
 //                        .build();

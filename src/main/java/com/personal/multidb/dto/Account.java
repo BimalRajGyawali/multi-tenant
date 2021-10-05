@@ -17,6 +17,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class Account {
     private int id;
     private String accountNumber;

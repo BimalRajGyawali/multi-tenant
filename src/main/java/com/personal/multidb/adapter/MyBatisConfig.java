@@ -1,18 +1,18 @@
 package com.personal.multidb.adapter;
 
-import com.personal.multidb.dto.AccountMapper;
+import com.personal.multidb.model.ClientDBConnectionDetail;
+import com.personal.multidb.repo.ClientDBConnectionDetailRepo;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author bimal on 10/5/21
@@ -23,28 +23,40 @@ import java.util.Map;
 public class MyBatisConfig {
 
     private final Map<Integer, SqlSessionFactory> sqlSessionFactoryMap = new HashMap<>();
-    private final DataSourceAdapter dataSourceAdapter;
+    private final ClientDBConnectionDetailRepo clientDBConnectionDetailRepo;
 
-    public SqlSessionFactory getSqlSessionFactory(int clientId){
-        if(sqlSessionFactoryMap.containsKey(clientId)){
+    public SqlSessionFactory getSqlSessionFactory(int clientId) {
+        if (sqlSessionFactoryMap.containsKey(clientId)) {
             return sqlSessionFactoryMap.get(clientId);
         }
+        ClientDBConnectionDetail connectionDetail = clientDBConnectionDetailRepo
+                .findByClientId(clientId)
+                .orElseThrow(RuntimeException::new);
 
-        DataSource dataSource = dataSourceAdapter.getDataSourceOfClient(clientId);
-        TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        Environment devEnv = new Environment("dev", transactionFactory, dataSource);
+        SqlSessionFactory factory = null;
 
-        Configuration configuration = new Configuration(devEnv);
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis_config.xml");
 
-        //Add MyBatis Mapper Classes here
-        configuration.addMapper(AccountMapper.class);
+            SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
 
-        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-        SqlSessionFactory sqlSessionFactory = builder.build(configuration);
+            Properties properties = new Properties();
+            properties.put("driver", connectionDetail.getDbDriver());
+            properties.put("url", connectionDetail.getDbUrl());
+            properties.put("username", connectionDetail.getDbUsername());
+            properties.put("password", connectionDetail.getDbPassword());
 
-        sqlSessionFactoryMap.put(clientId, sqlSessionFactory);
+            factory = builder.build(reader, properties);
 
-        return sqlSessionFactory;
+            sqlSessionFactoryMap.put(clientId, factory);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return factory;
     }
 
 }
