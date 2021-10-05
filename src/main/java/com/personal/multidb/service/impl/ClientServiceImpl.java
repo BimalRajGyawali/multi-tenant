@@ -1,14 +1,14 @@
 package com.personal.multidb.service.impl;
 
 import com.personal.multidb.adapter.DataSourceAdapter;
+import com.personal.multidb.adapter.MyBatisConfig;
 import com.personal.multidb.dto.Account;
+import com.personal.multidb.dto.AccountMyBatis;
 import com.personal.multidb.service.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -20,18 +20,14 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
 
     private final DataSourceAdapter dataSourceAdapter;
+    private final MyBatisConfig myBatisConfig;
 
     @Override
     public List<Account> getAccounts(int clientId) {
-        EntityManagerFactory emf = dataSourceAdapter.getEntityManager(clientId);
 
-        EntityManager entityManager = emf.createEntityManager();
+        SqlSessionFactory factory = myBatisConfig.getSqlSessionFactory(clientId);
 
-        Query query = entityManager.createNativeQuery("select * from accounts", Account.class);
-        List<Account> accounts = query.getResultList();
-
-        entityManager.close();
-
-        return accounts;
+        factory.openSession().selectList("select * from account", AccountMyBatis.class);
+        return List.of();
     }
 }
